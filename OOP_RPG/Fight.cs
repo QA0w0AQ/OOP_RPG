@@ -15,18 +15,20 @@ namespace OOP_RPG
             this.Monsters = new List<Monster>();
             this.Hero = hero;
             this.Game = game;
-            this.AddMonster("Squid", 9, 8, 20, 5);
-            this.AddMonster("Dragon", 11, 10, 21, 10);
-            this.AddMonster("Saber", 8, 12, 22, 8);
-            this.AddMonster("Lancer", 10, 7, 10, 6);
+            this.AddMonster("Squid", 9, 8, 20, 5, 11);
+            this.AddMonster("Dragon", 11, 10, 21, 12, 8);
+            this.AddMonster("Saber", 8, 12, 22, 8, 9);
+            this.AddMonster("Lancer", 10, 7, 10, 6, 13);
+            this.AddMonster("Caster", 12, 5, 15, 7, 10);
+            this.AddMonster("Basakar", 20, 10, 15, 10, 9);
 
             var randomMonster = this.Monsters.OrderBy(monster => Guid.NewGuid()).First();
             Enemy = randomMonster;
 
         }
 
-        public void AddMonster(string name, int strength, int defense, int hp, int gold) {
-            var monster = new Monster(name, strength, defense, hp, gold);
+        public void AddMonster(string name, int strength, int defense, int hp, int gold, int speed) {
+            var monster = new Monster(name, strength, defense, hp, gold, speed);
             this.Monsters.Add(monster);
         }
         
@@ -56,11 +58,25 @@ namespace OOP_RPG
             Enemy.CurrentHP + " HP. What will you do?");
             Console.WriteLine("1. Fight");
             var input = Console.ReadLine();
-            if (input == "1") {
+            if (Hero.Speed >Enemy.Speed && input =="1")
+            {
+                Console.WriteLine("Your speed is higher than enemy's speed!"); 
+                Console.WriteLine("Do you want to run away?");
+                Console.WriteLine("1. Fight");
+                Console.WriteLine("2. Run away");
+
+            }
+            var choose = Console.ReadLine();
+            if (choose == "1") {
                 this.HeroTurn();
             }
-            else { 
-                this.Game.Main();
+            else if (choose == "2" && Hero.Speed > Enemy.Speed)
+            {
+                Console.WriteLine("Yeah! You escaped from the monster!");
+                return;
+            }
+            if (Hero.Speed <= Enemy.Speed && input == "1") {
+                this.HeroTurn();
             }
         }
 
@@ -115,7 +131,9 @@ namespace OOP_RPG
         public void Win() {
 
             this.Hero.Gold += Enemy.Gold;
-            Console.WriteLine(Enemy.Name + " has been defeated! You win the battle! " +"And you has earned " + Hero.Gold + " gold from monster!" );
+            Console.WriteLine(Enemy.Name + " has been defeated! You win the battle! And you have earned " + Enemy.Gold + " gold from monster!" );
+            Console.WriteLine("You have " + Hero.Gold + " in your bag right now!");
+            Console.WriteLine("----------------------------------------------------");
             Game.Main();
         }
         
