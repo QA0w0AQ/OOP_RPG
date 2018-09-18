@@ -10,5 +10,6 @@ namespace OOP_RPG
     {
         int OriginalValue { get; set; }
         int ResellValue { get; set; }
+        int ItemNumber { get; set; }
     }
 }

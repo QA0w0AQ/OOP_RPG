@@ -21,7 +21,7 @@ namespace OOP_RPG
             this.Defense = 20;
             this.OriginalHP = 30;
             this.CurrentHP = 30;
-            this.Gold = 10;
+            this.Gold = 50;
             this.Speed = 10;
         }
         
@@ -35,7 +35,8 @@ namespace OOP_RPG
         public int Speed { get; set; }
         public Weapon EquippedWeapon { get; set; }
         public Armor EquippedArmor { get; set; }
-        
+        public Potion EquippedPotion { get; set; }
+
         public List<Armor> ArmorsBag { get; set;}
         public List <Weapon> WeaponsBag { get; set; }
         public List<Potion> PotionBag { get; set; }
@@ -71,14 +72,43 @@ namespace OOP_RPG
         public void EquipWeapon() {
             if(WeaponsBag.Any()) {
                 this.EquippedWeapon = this.WeaponsBag[0];
+                this.Strength += EquippedWeapon.Strength;
+                Console.WriteLine($"{this.EquippedWeapon.Name} is equiped!");
             }
-        }
-        
-        public void EquipArmor() {
-            if(ArmorsBag.Any()) {
+            else if (ArmorsBag.Any())
+            {
                 this.EquippedArmor = this.ArmorsBag[0];
+                this.Defense += EquippedArmor.Defense;
+                Console.WriteLine($"{this.EquippedArmor.Name} is equiped!");
             }
+            Console.WriteLine("Now, you become stonger!\nPress any key to return to main menu.");
+
         }
         
+        public void UsingPotion()
+        {
+            if(PotionBag.Any())
+            {
+                if (CurrentHP >= OriginalHP)
+                {
+                    Console.WriteLine("You have full Hp!");
+                }
+                else  {
+                    this.EquippedPotion = this.PotionBag[0];
+                    CurrentHP += EquippedPotion.HP;
+                    Console.WriteLine($"Used {this.EquippedPotion.Name}, you hp get improved!");
+                    if (CurrentHP > OriginalHP)
+                    {
+                        CurrentHP = OriginalHP;
+                        Console.WriteLine("You have full hp right now!");
+                    }
+                    else
+                    {
+                        CurrentHP = CurrentHP;
+                    } 
+                }
+                Console.WriteLine("Press any key to return to main menu.");
+            }
+        }
     }
 }

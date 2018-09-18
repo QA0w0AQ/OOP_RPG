@@ -12,13 +12,15 @@ namespace OOP_RPG
         public int Strength { get; set; }
         public int OriginalValue { get; set; }
         public int ResellValue { get; set; }
+        public int ItemNumber { get; set; }
 
-        public Weapon(String name, int strength, int originalValue, int resellValue)
+        public Weapon(String name, int strength, int originalValue, int resellValue,int itemNumber)
         {
             this.Name = name;
             this.Strength =strength;
             this.OriginalValue = originalValue;
             this.ResellValue = resellValue;
+            this.ItemNumber = itemNumber;
         }
     }
 }
